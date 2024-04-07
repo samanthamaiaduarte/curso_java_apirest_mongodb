@@ -1,6 +1,7 @@
 package com.samanthamaiduarte.apirestmongodb.resources;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -9,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.samanthamaiduarte.apirestmongodb.domain.User;
+import com.samanthamaiduarte.apirestmongodb.dto.UserDTO;
 import com.samanthamaiduarte.apirestmongodb.services.UserService;
 
 @RestController
@@ -19,8 +21,9 @@ public class UserResource {
 	private UserService service;
 	
 	@GetMapping
-	public ResponseEntity<List<User>> findAll() {
+	public ResponseEntity<List<UserDTO>> findAll() {
 		List<User> users  = service.findAll();
-		return ResponseEntity.ok().body(users);
+		List<UserDTO> usersDTO = users.stream().map(user -> new UserDTO(user)).collect(Collectors.toList());
+		return ResponseEntity.ok().body(usersDTO);
 	}
 }
