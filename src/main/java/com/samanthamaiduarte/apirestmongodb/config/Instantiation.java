@@ -9,6 +9,7 @@ import org.springframework.context.annotation.Configuration;
 
 import com.samanthamaiduarte.apirestmongodb.domain.Post;
 import com.samanthamaiduarte.apirestmongodb.domain.User;
+import com.samanthamaiduarte.apirestmongodb.dto.AuthorDTO;
 import com.samanthamaiduarte.apirestmongodb.repository.PostRepository;
 import com.samanthamaiduarte.apirestmongodb.repository.UserRepository;
 
@@ -33,8 +34,8 @@ public class Instantiation implements CommandLineRunner {
 		
 		userRepository.saveAll(Arrays.asList(maria, alex, bob));
 		
-		Post post1 = new Post(null, Instant.parse("2018-03-21T00:00:00Z"), "Partiu viagem", "Vou viajar pra São Paulo. Abraços!", maria);
-		Post post2 = new Post(null, Instant.parse("2018-03-23T00:00:00Z"), "Bom dia", "Acordei feliz hoje!", maria);
+		Post post1 = new Post(null, Instant.parse("2018-03-21T00:00:00Z"), "Partiu viagem", "Vou viajar pra São Paulo. Abraços!", new AuthorDTO(maria));
+		Post post2 = new Post(null, Instant.parse("2018-03-23T00:00:00Z"), "Bom dia", "Acordei feliz hoje!", new AuthorDTO(maria));
 		
 		postRepository.saveAll(Arrays.asList(post1, post2));
 		
