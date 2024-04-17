@@ -1,5 +1,6 @@
 package com.samanthamaiduarte.apirestmongodb.resources;
 
+import java.time.Instant;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,4 +33,18 @@ public class PostResource {
 		List<Post> posts = service.findByTitle(URL.decodeParam(text));
 		return ResponseEntity.ok().body(posts);
 	}
+	
+	@GetMapping(value="/fullsearch")
+	public ResponseEntity<List<Post>> fullSearch(
+			@RequestParam(value="text", defaultValue="") String text, 
+			@RequestParam(value="minDate", defaultValue="") String minDate,
+			@RequestParam(value="maxDate", defaultValue="") String maxDate) {
+		
+		text = URL.decodeParam(text);
+		Instant min = URL.convertDate(minDate, Instant.EPOCH);
+		Instant max = URL.convertDate(maxDate, Instant.now());
+		
+		List<Post> posts = service.fullSearch(text, min, max);
+		return ResponseEntity.ok().body(posts);
+	}	
 }

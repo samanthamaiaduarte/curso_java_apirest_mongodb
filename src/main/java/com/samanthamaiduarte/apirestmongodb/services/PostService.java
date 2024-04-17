@@ -1,5 +1,8 @@
 package com.samanthamaiduarte.apirestmongodb.services;
 
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.ZoneOffset;
 import java.util.List;
 import java.util.Optional;
 
@@ -26,4 +29,8 @@ public class PostService {
 		return repository.searchByTitle(word);
 	}
 	
+	public List<Post> fullSearch(String text, Instant minDate, Instant maxDate) {
+		maxDate = LocalDate.ofInstant(maxDate, ZoneOffset.UTC).atTime(23, 59, 59).toInstant(ZoneOffset.UTC);
+		return repository.fullSearch(text, minDate, maxDate);
+	}
 }
